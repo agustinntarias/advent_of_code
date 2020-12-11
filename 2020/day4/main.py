@@ -1,10 +1,10 @@
 import re
 FIELDS = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 validPassports = 0
-ASODIAKSODIA = ""
 with open("input", "r") as file:
     passports = file.read().split('\n\n')
     for passport in passports:
+
         # part a
         # presentFields = all(passport.count(field) == 1 for field in FIELDS)
         # if presentFields:
@@ -42,23 +42,7 @@ with open("input", "r") as file:
         validFields = all(fieldVal for fieldVal in fieldsVallist)
 
         if validFields:
-            # print(passport)
-            # print()
-            # print(f"byr=={byr}", f"byrVal=={byrVal}")
-            # print(f"iyr=={iyr}", f"iyrVal=={iyrVal}")
-            # print(f"eyr=={eyr}", f"eyrVal=={eyrVal}")
-            # print(f"hgt=={hgt}", f"hgtVal=={hgtVal}")
-            # print(f"hcl=={hcl}", f"hclVal=={hclVal}")
-            # print(f"ecl=={ecl}", f"eclVal=={eclVal}")
-            # print(f"pid=={pid}", f"pidVal=={pidVal}\n\n\n\n")
             validPassports += 1
-            ASODIAKSODIA += passport + '\n\n'
-        else:
-            pass
 
 
-
-
-print(ASODIAKSODIA)
 print(validPassports)
-# 9477831046
