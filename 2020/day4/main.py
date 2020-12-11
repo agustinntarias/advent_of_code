@@ -11,37 +11,16 @@ with open("input", "r") as file:
         #     validPassports += 1
 
         # part b
-
-        ## Regex
-        byrRx, iyrRx, eyrRx = r"byr:(\d*)", r"iyr:(\d*)", r"eyr:(\d*)"
-        hgtRx = r"hgt:(\d*cm|\d*in)"
-        hclRx = r"hcl:#([0-9a-f]*)"
-        eclRx = r"ecl:(amb|blu|brn|gry|grn|hzl|oth)"
-        pidRx = r"pid:(\d*)"
-        fieldsRxlist = [byrRx, iyrRx, eyrRx, hgtRx, hclRx, eclRx, pidRx]
-        fullRx = r"".join(rf"(?=.*{field})?" for field in fieldsRxlist)
-        fullRx = r"(?sm)" + fullRx  # to look in all lines
-
-        ## Get Fields
-        m = re.match(fullRx, passport)
-        byr, iyr, eyr, hgt, hcl, ecl, pid = m.groups()
-        if hgt != None:
-                hgtNum, hgtUnit = int(hgt[:-2]), hgt[-2:]
-        else:
-                hgtNum, hgtUnit = 0 ,"cm"
-
-        ## Validation
-        byrVal = (1920 <= int(byr) <= 2002) if byr != None else False
-        iyrVal = (2010 <= int(iyr) <= 2020) if iyr != None else False
-        eyrVal = (2020 <= int(eyr) <= 2030) if eyr != None else False
-        hgtVal = 150 <= hgtNum <= 193 if hgtUnit == "cm" else 59 <= hgtNum <= 76
-        hclVal, eclVal = hcl != None, ecl != None
-        pidVal = len(pid) == 9 if pid != None else False
-        fieldsVallist = [byrVal, iyrVal, eyrVal, hgtVal, hclVal, eclVal, pidVal]
-
-        validFields = all(fieldVal for fieldVal in fieldsVallist)
-
-        if validFields:
+        regex = (
+            r"(?sm)"  # multiline search
+            r"(?=.*byr:(19[2-9]\d|200[0-2]))?"  # 1920 <= byr <= 2002
+            r"(?=.*iyr:(201\d|2020))?"  # 2010 <= iyr <= 2020
+            r"(?=.*eyr:(202\d|2030))?"  # 2020 <= eyr <= 2030
+            r"(?=.*hgt:(1[5-8]\dcm|19[0-3]cm|6\din|59in|7[0-6]in))?"  # 150cm <= hgt <= 193cm or 59in <= hgt <= 76in
+            r"(?=.*hcl:#([0-9a-f]*))?"  # hcl = #(six digits or a-f)
+            r"(?=.*ecl:(amb|blu|brn|gry|grn|hzl|oth))?"  # ecl only one of determined values
+            r"(?=.*pid:(\d{9})\b)?")  # pid of 9 digits
+        if all(field != None for field in re.match(regex, passport).groups()):
             validPassports += 1
 
 
