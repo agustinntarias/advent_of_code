@@ -1,6 +1,9 @@
 with open("input", "r") as file:
     area = file.read().strip().split('\n')
-    slopes = [
+    slopes_a = [
+        (3, 1)
+    ]
+    slopes_b = [
         (1, 1),
         (3, 1),
         (5, 1),
@@ -8,7 +11,7 @@ with open("input", "r") as file:
         (1, 2)
     ]
     result = 1
-    for b, a in slopes:
+    for b, a in slopes_b:
         count = x = y = 0
         while x < len(area):
             if area[x][y] == '#': count += 1
