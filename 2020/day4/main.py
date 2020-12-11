@@ -1,10 +1,10 @@
 import re
 FIELDS = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 validPassports = 0
+ASODIAKSODIA = ""
 with open("input", "r") as file:
     passports = file.read().split('\n\n')
     for passport in passports:
-
         # part a
         # presentFields = all(passport.count(field) == 1 for field in FIELDS)
         # if presentFields:
@@ -35,14 +35,30 @@ with open("input", "r") as file:
         iyrVal = (2010 <= int(iyr) <= 2020) if iyr != None else False
         eyrVal = (2020 <= int(eyr) <= 2030) if eyr != None else False
         hgtVal = 150 <= hgtNum <= 193 if hgtUnit == "cm" else 59 <= hgtNum <= 76
-        hclVal, eclVal, pidVal = hcl != None, ecl != None, pid != None
+        hclVal, eclVal = hcl != None, ecl != None
+        pidVal = len(pid) == 9 if pid != None else False
         fieldsVallist = [byrVal, iyrVal, eyrVal, hgtVal, hclVal, eclVal, pidVal]
 
         validFields = all(fieldVal for fieldVal in fieldsVallist)
 
         if validFields:
+            # print(passport)
+            # print()
+            # print(f"byr=={byr}", f"byrVal=={byrVal}")
+            # print(f"iyr=={iyr}", f"iyrVal=={iyrVal}")
+            # print(f"eyr=={eyr}", f"eyrVal=={eyrVal}")
+            # print(f"hgt=={hgt}", f"hgtVal=={hgtVal}")
+            # print(f"hcl=={hcl}", f"hclVal=={hclVal}")
+            # print(f"ecl=={ecl}", f"eclVal=={eclVal}")
+            # print(f"pid=={pid}", f"pidVal=={pidVal}\n\n\n\n")
             validPassports += 1
+            ASODIAKSODIA += passport + '\n\n'
+        else:
+            pass
 
 
 
+
+print(ASODIAKSODIA)
 print(validPassports)
+# 9477831046
